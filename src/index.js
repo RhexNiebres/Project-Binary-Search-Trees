@@ -92,6 +92,26 @@ class Tree {
 
     return node; 
   }
+
+  find(value) {
+    return this._findNode(this.root, value);
+  }
+  
+  _findNode(node, value) {
+    if (node === null) {
+      return null;
+    }
+
+    if (value < node.data) {
+      return this._findNode(node.left, value);
+    } 
+    else if (value > node.data) {
+      return this._findNode(node.right, value);
+    } 
+    else {
+      return node;
+    }
+  }
 }
 
 const prettyPrint = (node, prefix = "", isLeft = true) => {
