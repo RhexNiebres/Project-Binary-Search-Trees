@@ -281,3 +281,71 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
     prettyPrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true);
   }
 };                                                                                                                                    
+
+const generateRandomArray = (size, max) => {
+  return Array.from({ length: size }, () => Math.floor(Math.random() * max));
+};
+
+// callback function to print node data
+const printNode = (node) => console.log(`${node.data} `);
+
+// driver script
+const DriverScript = () => {
+  console.log("Creating a binary search tree with random numbers...");
+
+  //generate random numbers and create the tree
+  const randomNumbers = generateRandomArray(15, 100); // 15 random numbers < 100
+  const tree = new Tree(randomNumbers);
+  console.log("Initial tree:");
+  prettyPrint(tree.root);
+
+  //check if the tree is balanced
+  console.log("\nIs the tree balanced?", tree.isBalanced());
+
+  //print traversals
+  console.log("\nLevel Order:");
+  tree.levelOrder(printNode);
+
+  console.log("\nPre-Order:");
+  tree.preOrder(printNode);
+
+  console.log("\nIn-Order:");
+  tree.inOrder(printNode);
+
+  console.log("\nPost-Order:");
+  tree.postOrder(printNode);
+
+  //unbalance the tree
+  console.log("\n\nUnbalancing the tree by adding numbers > 100...");
+  const unbalancingNumbers = [110, 120, 130, 140, 150];
+  unbalancingNumbers.forEach((num) => tree.insert(num));
+  console.log("Tree after adding unbalancing numbers:");
+  prettyPrint(tree.root);
+
+  console.log("\nIs the tree balanced?", tree.isBalanced());
+
+  //rebalance the tree
+  console.log("\nRebalancing the tree...");
+  tree.rebalance();
+  console.log("Tree after rebalancing:");
+  prettyPrint(tree.root);
+
+  //confirm balance and print traversals
+  console.log("\nIs the tree balanced?", tree.isBalanced());
+
+  console.log("\nLevel Order:");
+  tree.levelOrder(printNode);
+
+  console.log("\nPre-Order:");
+  tree.preOrder(printNode);
+
+  console.log("\nIn-Order:");
+  tree.inOrder(printNode);
+
+  console.log("\nPost-Order:");
+  tree.postOrder(printNode);
+
+  console.log("\nDrive script finised.")
+};
+
+DriverScript();
