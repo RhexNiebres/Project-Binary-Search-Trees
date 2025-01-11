@@ -223,6 +223,50 @@ class Tree {
     return -1;
   }
   
+  isBalanced() {//checks if the tree is ba;lance
+    const checkBalance = (node) => {
+      if (node === null) {
+        return 0; 
+      }
+  
+
+      const leftHeight = checkBalance(node.left);
+      const rightHeight = checkBalance(node.right);
+  
+      if (//checks if the left or right have defference in height
+        leftHeight === -1 ||
+        rightHeight === -1 ||
+        Math.abs(leftHeight - rightHeight) > 1
+      ) {
+        return -1; // Mark the tree as unbalanced
+      }
+  
+      // return if the height of node balance
+      return Math.max(leftHeight, rightHeight) + 1;
+    };
+  
+    //start at root
+    return checkBalance(this.root) !== -1;
+  }
+  
+  rebalance() {
+    const inOrderTraversal = (node, result = []) => {//helper function to get sorted array
+      if (node === null) return result;
+
+      inOrderTraversal(node.left, result);
+
+      result.push(node.data);
+
+      inOrderTraversal(node.right, result);
+  
+      return result;
+    };
+  
+    const sortedValues = inOrderTraversal(this.root);
+  
+    this.root = this.buildTree(sortedValues);//build tree
+  }
+  
 }
 
 const prettyPrint = (node, prefix = "", isLeft = true) => {
